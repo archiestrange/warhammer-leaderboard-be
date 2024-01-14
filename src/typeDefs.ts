@@ -1,6 +1,6 @@
 export const typeDefs = `#graphql
   type Query {
-    getUser(id: Int!): User
+    getUser(id: String!): User
     getUsers: [User]
   }
 
@@ -13,7 +13,7 @@ export const typeDefs = `#graphql
 
 
   type User {
-    id: Int!
+    id: String!
     firstName: String!
     lastName: String!
     email: String!

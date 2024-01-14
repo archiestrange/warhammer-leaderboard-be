@@ -30,5 +30,3 @@ _If your PR includes visual changes please paste a screenshot of them here._
 ## 🔗 Related PRs 🔗
 
 _Mention any related PRs here, or delete this block if not applicable._
-
-- [XXXX](https://github.com/climbing-community/climbing-community-api/pull/XXXX)
