@@ -24,6 +24,8 @@ export const createUser = async ({ email, password, firstName, lastName }: Args)
   user.lastName = lastName;
   user.email = email.toLowerCase();
   user.password = password;
+  user.maxWinStreak = 0;
+  user.winStreak = 0;
 
   console.log('createUser - info - Saving new user item to database...');
   await AppDataSource.manager.insert(User, user);

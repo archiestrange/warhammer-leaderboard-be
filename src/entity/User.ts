@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,4 +16,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  winStreak: number;
+
+  @Column()
+  maxWinStreak: number;
 }
