@@ -59,5 +59,39 @@ export const createGame = async ({
 
   await AppDataSource.manager.insert(Game, game);
 
+  // Handle win streak updates
+
+  if (attackerPoints > defenderPoints) {
+    if (attackerId) {
+      const newWinStreak = attacker.winStreak + 1;
+      const updateValues = {
+        winStreak: newWinStreak,
+        maxWinStreak: attacker.maxWinStreak < newWinStreak ? newWinStreak : attacker.maxWinStreak,
+      };
+
+      await AppDataSource.manager.update(User, { id: attackerId }, updateValues);
+    }
+
+    if (defenderId) {
+      await AppDataSource.manager.update(User, { id: defenderId }, { winStreak: 0 });
+    }
+  }
+
+  if (attackerPoints < defenderPoints) {
+    if (defenderId) {
+      const newWinStreak = defender.winStreak + 1;
+      const updateValues = {
+        winStreak: newWinStreak,
+        maxWinStreak: defender.maxWinStreak < newWinStreak ? newWinStreak : defender.maxWinStreak,
+      };
+
+      await AppDataSource.manager.update(User, { id: defenderId }, updateValues);
+    }
+
+    if (attackerId) {
+      await AppDataSource.manager.update(User, { id: attackerId }, { winStreak: 0 });
+    }
+  }
+
   return game;
 };
