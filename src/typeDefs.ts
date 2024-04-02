@@ -10,6 +10,7 @@ export const typeDefs = `#graphql
     getLeague(userId: String!, leagueId: String!): LeagueMember!
     getLeagueMembers(leagueId: String!, limit: Int!, offset: Int!): GetLeagueListResult!
     getGamesList(userId: String!, limit: Int!, offset: Int!): GetGameListResult!
+    getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetGameListResult!
     getGame(gameId: String!): Game!
   }
 

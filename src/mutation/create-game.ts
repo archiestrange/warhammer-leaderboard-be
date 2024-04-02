@@ -1,6 +1,7 @@
 import { AppDataSource } from '../data-source';
 import { Game } from '../entity/Game';
 import { League } from '../entity/League';
+import { LeagueMember } from '../entity/LeagueMember';
 import { User } from '../entity/User';
 import { getExactTimeFromDate } from '../utils/get-exact-time-from-date';
 
@@ -42,7 +43,24 @@ export const createGame = async ({
       })
     : null;
 
-  console.log('createGame - info - Creating new league item.');
+  if (leagueId && (!attackerId || !defenderId)) {
+    throw new Error(`You can't play a league game with a guest!`);
+  }
+
+  if (league) {
+    const defenderInLeague = await AppDataSource.manager.findOne(LeagueMember, {
+      where: { league: { id: league.id }, user: { id: defenderId } },
+    });
+    const attackerInLeague = await AppDataSource.manager.findOne(LeagueMember, {
+      where: { league: { id: league.id }, user: { id: attackerId } },
+    });
+
+    if (!attackerInLeague || !defenderInLeague) {
+      throw new Error('One of the players is not in that league!');
+    }
+  }
+
+  console.log('createGame - info - Creating new game item.');
 
   const game = new Game();
   game.date = getExactTimeFromDate(new Date());
@@ -55,7 +73,7 @@ export const createGame = async ({
   game.defenderPoints = defenderPoints;
   game.league = league || null;
 
-  console.log('createGame - info - Saving new league item to database...');
+  console.log('createGame - info - Saving new game item to database...');
 
   await AppDataSource.manager.insert(Game, game);
 
