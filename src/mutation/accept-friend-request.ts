@@ -24,6 +24,7 @@ export const acceptFriendRequest = async ({ id }) => {
   await AppDataSource.manager.transaction(async (entityManager) => {
     console.log('acceptFriendRequest - info - saving new friend list item for receiver');
     await entityManager.insert(Friend, newReceiver);
+    await entityManager.insert(Friend, newRequester);
     console.log('acceptFriendRequest - info - removing friend request item');
     await entityManager.remove(FriendRequest, request);
   });
