@@ -1,12 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
 import { League } from './League';
 import { User } from './User';
@@ -33,6 +25,12 @@ export class Game {
 
   @Column()
   defenderPoints: number;
+
+  @Column()
+  attackerAveragePoints: number;
+
+  @Column()
+  defenderAveragePoints: number;
 
   @Column()
   attackerArmy: string;

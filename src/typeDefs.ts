@@ -12,6 +12,7 @@ export const typeDefs = `#graphql
     getGamesList(userId: String!, limit: Int!, offset: Int!): GetGameListResult!
     getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetGameListResult!
     getGame(gameId: String!): Game!
+    getProfile(id: String!): Profile!
   }
 
 
@@ -30,7 +31,9 @@ export const typeDefs = `#graphql
       defenderId: String,
       leagueId: String,
       attackerPoints: Int!,
-      defenderPoints: Int!
+      defenderPoints: Int!,
+      attackerAveragePoints: Int!,
+      defenderAveragePoints: Int!,
       attackerArmy: String!,
       defenderArmy: String!,
       score: String!
@@ -92,10 +95,57 @@ export const typeDefs = `#graphql
     defender: User
     attackerPoints: Int!
     defenderPoints: Int!
+    attackerAveragePoints: Int!
+    defenderAveragePoints: Int!
     league: League
     attackerArmy: String!
     defenderArmy: String!
     score: String!
+  }
+
+  type ProfileTotalGames {
+    totalGames: Int!
+    totalWins: Int!
+    totalLosses: Int!
+    totalDraws: Int!
+  }
+
+  type ProfileTotalAttackerGames{
+    totalGamesAsAttacker: Int!
+    totalWinsAsAttacker: Int!
+    totalLossesAsAttacker: Int!
+    totalDrawsAsAttacker: Int!
+  }
+
+  type ProfileTotalDefenderGames {
+    totalGamesAsDefender: Int!
+    totalWinsAsDefender: Int!
+    totalLossesAsDefender: Int!
+    totalDrawsAsDefender: Int!
+  }
+
+  type ProfileGames {
+    totalGames: ProfileTotalGames!
+    attacker: ProfileTotalAttackerGames!
+    defender: ProfileTotalDefenderGames!
+  }
+
+  type ProfileCP {
+    averageCPOnWins: Int!
+    averageCPOnLosses: Int!
+    averageCPOnWinsAsAttacker: Int!
+    averageCPOnWinsAsDefender: Int!
+    averageCPOnLossesAsAttacker: Int!
+    averageCPOnLossesAsDefender: Int!
+    averageCPOnDraws: Int!
+    averageCPOnDrawsAsAttacker: Int!
+    averageCPOnDrawsAsDefender: Int!
+  }
+
+  type Profile {
+    user: User!
+    games: ProfileGames!
+    cp: ProfileCP!
   }
 
   type League {

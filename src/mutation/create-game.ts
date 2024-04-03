@@ -11,6 +11,8 @@ export const createGame = async ({
   leagueId,
   attackerPoints,
   defenderPoints,
+  attackerAveragePoints,
+  defenderAveragePoints,
   attackerArmy,
   defenderArmy,
   score,
@@ -71,6 +73,8 @@ export const createGame = async ({
   game.defender = defender || null;
   game.attackerPoints = attackerPoints;
   game.defenderPoints = defenderPoints;
+  game.attackerAveragePoints = attackerAveragePoints;
+  game.defenderAveragePoints = defenderAveragePoints;
   game.league = league || null;
 
   console.log('createGame - info - Saving new game item to database...');
