@@ -81,10 +81,10 @@ export const getProfile = async ({ id }: Args) => {
     return f.attackerPoints === f.defenderPoints;
   });
 
-  // CP!
+  // VP!
 
-  // -- Wins CP
-  const totalCPOnWins = totalWins.reduce(
+  // -- Wins VP
+  const totalVPOnWins = totalWins.reduce(
     (accumulator, currentValue) =>
       accumulator +
       (currentValue.attacker?.id === id
@@ -93,23 +93,23 @@ export const getProfile = async ({ id }: Args) => {
     0,
   );
 
-  const averageCPOnWins = totalCPOnWins / totalWins.length;
+  const averageVPOnWins = totalVPOnWins / totalWins.length;
 
-  const totalCPOnWinsAsAttacker = totalWinsAsAttacker.reduce(
+  const totalVPOnWinsAsAttacker = totalWinsAsAttacker.reduce(
     (accumulator, currentValue) => accumulator + currentValue.attackerAveragePoints,
     0,
   );
 
-  const averageCPOnWinsAsAttacker = totalCPOnWinsAsAttacker / totalWinsAsAttacker.length;
+  const averageVPOnWinsAsAttacker = totalVPOnWinsAsAttacker / totalWinsAsAttacker.length;
 
-  const totalCPOnWinsAsDefender = totalWinsAsDefender.reduce(
+  const totalVPOnWinsAsDefender = totalWinsAsDefender.reduce(
     (accumulator, currentValue) => accumulator + currentValue.defenderAveragePoints,
     0,
   );
-  const averageCPOnWinsAsDefender = totalCPOnWinsAsDefender / totalWinsAsDefender.length;
+  const averageVPOnWinsAsDefender = totalVPOnWinsAsDefender / totalWinsAsDefender.length;
 
-  // -- Losses CP
-  const totalCPOnLosses = totalLosses.reduce(
+  // -- Losses VP
+  const totalVPOnLosses = totalLosses.reduce(
     (accumulator, currentValue) =>
       accumulator +
       (currentValue.attacker?.id === id
@@ -118,42 +118,42 @@ export const getProfile = async ({ id }: Args) => {
     0,
   );
 
-  const averageCPOnLosses = totalCPOnLosses / totalLosses.length;
+  const averageVPOnLosses = totalVPOnLosses / totalLosses.length;
 
-  const totalCPOnLossesAsAttacker = totalLossesAsAttacker.reduce(
+  const totalVPOnLossesAsAttacker = totalLossesAsAttacker.reduce(
     (accumulator, currentValue) => accumulator + currentValue.attackerAveragePoints,
     0,
   );
 
-  const averageCPOnLossesAsAttacker = totalCPOnLossesAsAttacker / totalLossesAsAttacker.length;
+  const averageVPOnLossesAsAttacker = totalVPOnLossesAsAttacker / totalLossesAsAttacker.length;
 
-  const totalCPOnLossesAsDefender = totalLossesAsDefender.reduce(
+  const totalVPOnLossesAsDefender = totalLossesAsDefender.reduce(
     (accumulator, currentValue) => accumulator + currentValue.defenderAveragePoints,
     0,
   );
-  const averageCPOnLossesAsDefender = totalCPOnLossesAsDefender / totalLossesAsDefender.length;
+  const averageVPOnLossesAsDefender = totalVPOnLossesAsDefender / totalLossesAsDefender.length;
 
-  // -- Draws CP
-  const totalCPOnDraws = totalDraws.reduce(
+  // -- Draws VP
+  const totalVPOnDraws = totalDraws.reduce(
     (accumulator, currentValue) => accumulator + currentValue.attackerAveragePoints,
     0,
   );
 
-  const averageCPOnDraws = totalCPOnDraws / totalDraws.length;
+  const averageVPOnDraws = totalVPOnDraws / totalDraws.length;
 
-  const totalCPOnDrawsAsAttacker = totalDrawsAsAttacker.reduce(
+  const totalVPOnDrawsAsAttacker = totalDrawsAsAttacker.reduce(
     (accumulator, currentValue) => accumulator + currentValue.attackerAveragePoints,
     0,
   );
 
-  const averageCPOnDrawsAsAttacker = totalCPOnDrawsAsAttacker / totalDrawsAsAttacker.length;
+  const averageVPOnDrawsAsAttacker = totalVPOnDrawsAsAttacker / totalDrawsAsAttacker.length;
 
-  const totalCPOnDrawsAsDefender = totalDrawsAsDefender.reduce(
+  const totalVPOnDrawsAsDefender = totalDrawsAsDefender.reduce(
     (accumulator, currentValue) => accumulator + currentValue.defenderAveragePoints,
     0,
   );
 
-  const averageCPOnDrawsAsDefender = totalCPOnDrawsAsDefender / totalDrawsAsDefender.length;
+  const averageVPOnDrawsAsDefender = totalVPOnDrawsAsDefender / totalDrawsAsDefender.length;
 
   return {
     user: existingUser,
@@ -177,24 +177,24 @@ export const getProfile = async ({ id }: Args) => {
         totalDrawsAsDefender: totalDrawsAsDefender.length,
       },
     },
-    cp: {
-      averageCPOnWins: isNaN(averageCPOnWins) ? 0 : averageCPOnWins,
-      averageCPOnLosses: isNaN(averageCPOnLosses) ? 0 : averageCPOnLosses,
-      averageCPOnWinsAsAttacker: isNaN(averageCPOnWinsAsAttacker) ? 0 : averageCPOnWinsAsAttacker,
-      averageCPOnWinsAsDefender: isNaN(averageCPOnWinsAsDefender) ? 0 : averageCPOnWinsAsDefender,
-      averageCPOnLossesAsAttacker: isNaN(averageCPOnLossesAsAttacker)
+    vp: {
+      averageVPOnWins: isNaN(averageVPOnWins) ? 0 : averageVPOnWins,
+      averageVPOnLosses: isNaN(averageVPOnLosses) ? 0 : averageVPOnLosses,
+      averageVPOnWinsAsAttacker: isNaN(averageVPOnWinsAsAttacker) ? 0 : averageVPOnWinsAsAttacker,
+      averageVPOnWinsAsDefender: isNaN(averageVPOnWinsAsDefender) ? 0 : averageVPOnWinsAsDefender,
+      averageVPOnLossesAsAttacker: isNaN(averageVPOnLossesAsAttacker)
         ? 0
-        : averageCPOnLossesAsAttacker,
-      averageCPOnLossesAsDefender: isNaN(averageCPOnLossesAsDefender)
+        : averageVPOnLossesAsAttacker,
+      averageVPOnLossesAsDefender: isNaN(averageVPOnLossesAsDefender)
         ? 0
-        : averageCPOnLossesAsDefender,
-      averageCPOnDraws: isNaN(averageCPOnDraws) ? 0 : averageCPOnDraws,
-      averageCPOnDrawsAsAttacker: isNaN(averageCPOnDrawsAsAttacker)
+        : averageVPOnLossesAsDefender,
+      averageVPOnDraws: isNaN(averageVPOnDraws) ? 0 : averageVPOnDraws,
+      averageVPOnDrawsAsAttacker: isNaN(averageVPOnDrawsAsAttacker)
         ? 0
-        : averageCPOnDrawsAsAttacker,
-      averageCPOnDrawsAsDefender: isNaN(averageCPOnDrawsAsDefender)
+        : averageVPOnDrawsAsAttacker,
+      averageVPOnDrawsAsDefender: isNaN(averageVPOnDrawsAsDefender)
         ? 0
-        : averageCPOnDrawsAsDefender,
+        : averageVPOnDrawsAsDefender,
     },
   };
 };

@@ -130,22 +130,22 @@ export const typeDefs = `#graphql
     defender: ProfileTotalDefenderGames!
   }
 
-  type ProfileCP {
-    averageCPOnWins: Int!
-    averageCPOnLosses: Int!
-    averageCPOnWinsAsAttacker: Int!
-    averageCPOnWinsAsDefender: Int!
-    averageCPOnLossesAsAttacker: Int!
-    averageCPOnLossesAsDefender: Int!
-    averageCPOnDraws: Int!
-    averageCPOnDrawsAsAttacker: Int!
-    averageCPOnDrawsAsDefender: Int!
+  type ProfileVP {
+    averageVPOnWins: Float!
+    averageVPOnLosses: Float!
+    averageVPOnWinsAsAttacker: Float!
+    averageVPOnWinsAsDefender: Float!
+    averageVPOnLossesAsAttacker: Float!
+    averageVPOnLossesAsDefender: Float!
+    averageVPOnDraws: Float!
+    averageVPOnDrawsAsAttacker: Float!
+    averageVPOnDrawsAsDefender: Float!
   }
 
   type Profile {
     user: User!
     games: ProfileGames!
-    cp: ProfileCP!
+    vp: ProfileVP!
   }
 
   type League {
