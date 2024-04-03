@@ -25,6 +25,7 @@ export const typeDefs = `#graphql
     removeFriend(id: String!): String!
     blockUser(blockerId: String!, blockeeId: String!): Blocked!
     createLeague(userId: String!, name: String!, isPrivate: Boolean!): League!
+    deleteLeague(userId: String!, leagueId: String!): League!
     joinLeague(userId: String!, leagueId: String!): LeagueMember!
     createGame(
       attackerId: String,

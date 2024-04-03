@@ -4,6 +4,7 @@ import { createGame } from './mutation/create-game';
 import { createLeague } from './mutation/create-league';
 import { createUser } from './mutation/create-user';
 import { declineFriendRequest } from './mutation/decline-friend-request';
+import { deleteLeague } from './mutation/delete-league';
 import { joinLeague } from './mutation/join-league';
 import { removeFriend } from './mutation/remove-friend';
 import { sendFriendRequest } from './mutation/send-friend-request';
@@ -47,6 +48,7 @@ export const resolvers = {
     removeFriend: async (_, args) => removeFriend(args),
     blockUser: async (_, args) => blockUser(args),
     createLeague: async (_, args) => createLeague(args),
+    deleteLeague: async (_, args) => deleteLeague(args),
     joinLeague: async (_, args) => joinLeague(args),
     createGame: async (_, args) => createGame(args),
   },
