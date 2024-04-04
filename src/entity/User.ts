@@ -11,6 +11,9 @@ export class User {
   @Column()
   lastName: string;
 
+  @Column({ default: '' })
+  username: string;
+
   @Column()
   email: string;
 

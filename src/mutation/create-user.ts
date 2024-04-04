@@ -3,7 +3,7 @@ import { User } from '../entity/User';
 
 type Args = Omit<User, 'id'>;
 
-export const createUser = async ({ email, password, firstName, lastName }: Args) => {
+export const createUser = async ({ email, username, password, firstName, lastName }: Args) => {
   console.log('createUser - info - started');
   console.log('createUser - info - Validating email does not already exist...');
 
@@ -15,6 +15,14 @@ export const createUser = async ({ email, password, firstName, lastName }: Args)
     console.log('createUser - warning - Email validation failed. User already exists.');
     throw new Error('A user with that email already exists.');
   }
+  const existingUsername = await AppDataSource.manager.findOne(User, {
+    where: { username: username.toLowerCase() },
+  });
+
+  if (existingUsername) {
+    console.log('createUser - warning - Username validation failed. User already exists.');
+    throw new Error('That username is already in use');
+  }
 
   console.log('createUser - info - Email validation passed. Email not in use.');
   console.log('createUser - info - Creating new user item.');
@@ -22,6 +30,7 @@ export const createUser = async ({ email, password, firstName, lastName }: Args)
   const user = new User();
   user.firstName = firstName;
   user.lastName = lastName;
+  user.username = username;
   user.email = email.toLowerCase();
   user.password = password;
   user.maxWinStreak = 0;

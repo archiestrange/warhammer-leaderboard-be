@@ -8,7 +8,10 @@ export const signIn = async ({ email, password }: Args) => {
   console.log('signIn - info - Validating email does not already exist...');
 
   const user = await AppDataSource.manager.findOne(User, {
-    where: { email: email.toLowerCase(), password },
+    where: [
+      { email: email.toLowerCase(), password },
+      { username: email.toLowerCase(), password },
+    ],
   });
 
   if (!user) {
