@@ -14,7 +14,7 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column({ default: '' })
+  @Column()
   username: string;
 
   @Column()
