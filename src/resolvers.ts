@@ -21,6 +21,7 @@ import { getLeagueMembers } from './query/get-league-members';
 import { getProfile } from './query/get-profile';
 import { getSuggestedFriends } from './query/get-suggested-friends';
 import { getUser } from './query/get-user';
+import { getUserRankings } from './query/get-user-rankings';
 import { searchLeagues } from './query/search-leagues';
 import { searchUsers } from './query/search-users';
 
@@ -39,6 +40,7 @@ export const resolvers = {
     getGamesByLeagueList: (_, args) => getGamesByLeagueList(args),
     getGame: (_, args) => getGame(args),
     getProfile: (_, args) => getProfile(args),
+    getUserRankings: (_, args) => getUserRankings(args),
   },
   Mutation: {
     createUser: (_, args) => createUser(args),

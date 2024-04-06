@@ -13,6 +13,7 @@ export const typeDefs = `#graphql
     getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetGameListResult!
     getGame(gameId: String!): Game!
     getProfile(id: String!): Profile!
+    getUserRankings(limit: Int!, offset: Int!): GetUserRankingsResult!
   }
 
 
@@ -54,6 +55,13 @@ export const typeDefs = `#graphql
     winStreak: Int!
     maxWinStreak: Int!
     globalRanking: Int!
+    date: String!
+  }
+
+
+  type GetUserRankingsResult {
+    data: [User!]!
+    count: Int!
   }
 
   type FriendRequest {
