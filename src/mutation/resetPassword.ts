@@ -1,0 +1,54 @@
+import { AppDataSource } from '../data-source';
+import { User } from '../entity/User';
+
+var nodemailer = require('nodemailer');
+
+function makePassword(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+export const resetPassword = async ({ email }) => {
+  const existingEmail = await AppDataSource.manager.findOne(User, {
+    where: { email: email.toLowerCase() },
+  });
+
+  if (!existingEmail) {
+    console.log('createUser - warning - Email validation failed. User could not be found.');
+    throw new Error('No account with that email could be found.');
+  }
+
+  const newPassword = makePassword(8);
+
+  await AppDataSource.manager.update(User, { email }, { password: newPassword });
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'tallyman.uk',
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: 'no-reply@gmailtallyman.uk',
+    to: email,
+    subject: 'Your password has been updated',
+    text: `Use this to sign in next time: ${newPassword}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    throw new Error('Email could not be sent');
+  }
+
+  return email;
+};

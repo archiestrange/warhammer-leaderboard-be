@@ -39,6 +39,7 @@ export const typeDefs = `#graphql
       defenderArmy: String!,
       score: String!
     ): Game!
+    resetPassword(email: String!): String!
   }
 
 

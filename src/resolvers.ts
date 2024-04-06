@@ -7,6 +7,7 @@ import { declineFriendRequest } from './mutation/decline-friend-request';
 import { deleteLeague } from './mutation/delete-league';
 import { joinLeague } from './mutation/join-league';
 import { removeFriend } from './mutation/remove-friend';
+import { resetPassword } from './mutation/resetPassword';
 import { sendFriendRequest } from './mutation/send-friend-request';
 import { signIn } from './mutation/sign-in';
 import { getFriendList } from './query/get-friend-list';
@@ -51,5 +52,6 @@ export const resolvers = {
     deleteLeague: async (_, args) => deleteLeague(args),
     joinLeague: async (_, args) => joinLeague(args),
     createGame: async (_, args) => createGame(args),
+    resetPassword: async (_, args) => resetPassword(args),
   },
 };
