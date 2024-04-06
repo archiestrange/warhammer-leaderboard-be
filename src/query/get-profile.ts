@@ -1,5 +1,6 @@
 import { AppDataSource } from '../data-source';
 import { Game } from '../entity/Game';
+import { LeagueMember } from '../entity/LeagueMember';
 import { User } from '../entity/User';
 
 type Args = Pick<User, 'id'>;
@@ -11,6 +12,19 @@ export const getProfile = async ({ id }: Args) => {
   const existingUser = await AppDataSource.manager.findOne(User, {
     where: { id },
   });
+
+  const query = `
+    SELECT subquery.rowNumber
+    FROM (
+      SELECT id, ROW_NUMBER() OVER (ORDER BY "globalRanking" DESC) AS rownumber
+      FROM "user"
+    ) AS subquery
+    WHERE subquery.id = $1
+  `;
+
+  const result = await AppDataSource.manager.query(query, [id]);
+
+  const rowNumber = parseInt(result?.[0]?.rownumber ?? 0);
 
   if (!existingUser) {
     console.log('getProfile - warning - No user found with that id');
@@ -157,6 +171,7 @@ export const getProfile = async ({ id }: Args) => {
 
   return {
     user: existingUser,
+    globalRanking: rowNumber,
     games: {
       totalGames: {
         totalGames: totalGames,

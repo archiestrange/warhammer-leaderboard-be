@@ -25,4 +25,7 @@ export class User {
 
   @Column()
   maxWinStreak: number;
+
+  @Column({ default: 400 })
+  globalRanking: number;
 }

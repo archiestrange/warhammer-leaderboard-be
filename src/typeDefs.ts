@@ -53,6 +53,7 @@ export const typeDefs = `#graphql
     password: String!
     winStreak: Int!
     maxWinStreak: Int!
+    globalRanking: Int!
   }
 
   type FriendRequest {
@@ -147,6 +148,7 @@ export const typeDefs = `#graphql
 
   type Profile {
     user: User!
+    globalRanking: Int!
     games: ProfileGames!
     vp: ProfileVP!
   }
@@ -164,6 +166,7 @@ export const typeDefs = `#graphql
     date: String!
     user: User!
     league: League!
+    leagueRanking: Int!
   }
 
   type GetLeagueListResult {

@@ -11,6 +11,9 @@ export class LeagueMember {
   @Column()
   date: string;
 
+  @Column({ default: 400 })
+  leagueRanking: number;
+
   @ManyToOne(() => User, (user) => user)
   user: Relation<User>;
 

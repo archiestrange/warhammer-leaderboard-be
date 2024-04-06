@@ -3,6 +3,7 @@ import { Game } from '../entity/Game';
 import { League } from '../entity/League';
 import { LeagueMember } from '../entity/LeagueMember';
 import { User } from '../entity/User';
+import { calculateNewRank } from '../utils/calculateNewRank';
 import { getExactTimeFromDate } from '../utils/get-exact-time-from-date';
 
 export const createGame = async ({
@@ -49,11 +50,13 @@ export const createGame = async ({
     throw new Error(`You can't play a league game with a guest!`);
   }
 
+  let defenderInLeague;
+  let attackerInLeague;
   if (league) {
-    const defenderInLeague = await AppDataSource.manager.findOne(LeagueMember, {
+    defenderInLeague = await AppDataSource.manager.findOne(LeagueMember, {
       where: { league: { id: league.id }, user: { id: defenderId } },
     });
-    const attackerInLeague = await AppDataSource.manager.findOne(LeagueMember, {
+    attackerInLeague = await AppDataSource.manager.findOne(LeagueMember, {
       where: { league: { id: league.id }, user: { id: attackerId } },
     });
 
@@ -89,13 +92,37 @@ export const createGame = async ({
       const updateValues = {
         winStreak: newWinStreak,
         maxWinStreak: attacker.maxWinStreak < newWinStreak ? newWinStreak : attacker.maxWinStreak,
+        globalRanking:
+          attackerId && defenderId
+            ? calculateNewRank({
+                currentRank: attacker.globalRanking,
+                opponentRank: defender.globalRanking,
+                isBonusPoints: attackerPoints > defenderPoints + 19,
+                win: true,
+              })
+            : attacker.globalRanking,
       };
 
       await AppDataSource.manager.update(User, { id: attackerId }, updateValues);
     }
 
     if (defenderId) {
-      await AppDataSource.manager.update(User, { id: defenderId }, { winStreak: 0 });
+      await AppDataSource.manager.update(
+        User,
+        { id: defenderId },
+        {
+          winStreak: 0,
+          globalRanking:
+            attackerId && defenderId
+              ? calculateNewRank({
+                  currentRank: defender.globalRanking,
+                  opponentRank: attacker.globalRanking,
+                  isBonusPoints: false,
+                  win: false,
+                })
+              : defender.globalRanking,
+        },
+      );
     }
   }
 
@@ -105,14 +132,62 @@ export const createGame = async ({
       const updateValues = {
         winStreak: newWinStreak,
         maxWinStreak: defender.maxWinStreak < newWinStreak ? newWinStreak : defender.maxWinStreak,
+        globalRanking: calculateNewRank({
+          currentRank: defender.globalRanking,
+          opponentRank: attacker.globalRanking,
+          isBonusPoints: defenderPoints > attackerPoints + 19,
+          win: true,
+        }),
       };
 
       await AppDataSource.manager.update(User, { id: defenderId }, updateValues);
     }
 
     if (attackerId) {
-      await AppDataSource.manager.update(User, { id: attackerId }, { winStreak: 0 });
+      await AppDataSource.manager.update(
+        User,
+        { id: attackerId },
+        {
+          winStreak: 0,
+          globalRanking: calculateNewRank({
+            currentRank: attacker.globalRanking,
+            opponentRank: defender.globalRanking,
+            isBonusPoints: false,
+            win: false,
+          }),
+        },
+      );
     }
+  }
+
+  if (leagueId && attackerId && defenderId) {
+    await AppDataSource.manager.update(
+      LeagueMember,
+      { league: { id: league.id }, user: { id: attacker.id } },
+      {
+        leagueRanking: calculateNewRank({
+          currentRank: attackerInLeague.leagueRanking,
+          opponentRank: defenderInLeague.leagueRanking,
+          isBonusPoints: attackerPoints > defenderPoints + 19,
+          win: attackerPoints > defenderPoints,
+          draw: attackerPoints === defenderPoints,
+        }),
+      },
+    );
+
+    await AppDataSource.manager.update(
+      LeagueMember,
+      { league: { id: league.id }, user: { id: defender.id } },
+      {
+        leagueRanking: calculateNewRank({
+          currentRank: defenderInLeague.leagueRanking,
+          opponentRank: attackerInLeague.leagueRanking,
+          isBonusPoints: defenderPoints > attackerPoints + 19,
+          win: defenderPoints > attackerPoints,
+          draw: attackerPoints === defenderPoints,
+        }),
+      },
+    );
   }
 
   return game;

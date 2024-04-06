@@ -9,6 +9,9 @@ export const getLeagueMembers = async ({ leagueId, limit, offset }) => {
     relations: ['user', 'league', 'league.owner'],
     take: limit,
     skip: offset,
+    order: {
+      leagueRanking: 'DESC',
+    },
   });
 
   console.log('getLeague - info - success');
