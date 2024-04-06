@@ -16,18 +16,7 @@ function makePassword(length) {
 }
 
 export const resetPassword = async ({ email }) => {
-  const existingEmail = await AppDataSource.manager.findOne(User, {
-    where: { email: email.toLowerCase() },
-  });
-
-  if (!existingEmail) {
-    console.log('createUser - warning - Email validation failed. User could not be found.');
-    throw new Error('No account with that email could be found.');
-  }
-
   const newPassword = makePassword(8);
-
-  await AppDataSource.manager.update(User, { email }, { password: newPassword });
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -49,6 +38,17 @@ export const resetPassword = async ({ email }) => {
   } catch (err) {
     throw new Error('Email could not be sent');
   }
+
+  const existingEmail = await AppDataSource.manager.findOne(User, {
+    where: { email: email.toLowerCase() },
+  });
+
+  if (!existingEmail) {
+    console.log('createUser - warning - Email validation failed. User could not be found.');
+    throw new Error('No account with that email could be found.');
+  }
+
+  await AppDataSource.manager.update(User, { email }, { password: newPassword });
 
   return email;
 };
