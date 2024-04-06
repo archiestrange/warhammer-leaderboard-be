@@ -32,7 +32,10 @@ export const getProfile = async ({ id }: Args) => {
   }
 
   const allGamesCount = await AppDataSource.manager.find(Game, {
-    where: [{ attacker: { id } }, { defender: { id } }],
+    where: [
+      { attacker: { id } },
+      { defender: { id }, attackerHandshake: true, defenderHandshake: true },
+    ],
     relations: {
       attacker: true,
       defender: true,

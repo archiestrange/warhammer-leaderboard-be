@@ -1,5 +1,6 @@
 import { acceptFriendRequest } from './mutation/accept-friend-request';
 import { blockUser } from './mutation/block-user';
+import { confirmGame } from './mutation/confirm-game';
 import { createGame } from './mutation/create-game';
 import { createLeague } from './mutation/create-league';
 import { createUser } from './mutation/create-user';
@@ -54,6 +55,7 @@ export const resolvers = {
     deleteLeague: async (_, args) => deleteLeague(args),
     joinLeague: async (_, args) => joinLeague(args),
     createGame: async (_, args) => createGame(args),
+    confirmGame: async (_, args) => confirmGame(args),
     resetPassword: async (_, args) => resetPassword(args),
   },
 };

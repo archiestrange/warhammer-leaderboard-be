@@ -9,7 +9,7 @@ export const typeDefs = `#graphql
     searchLeagues(userId: String!, name: String!): [League!]!
     getLeague(userId: String!, leagueId: String!): LeagueMember!
     getLeagueMembers(leagueId: String!, limit: Int!, offset: Int!): GetLeagueListResult!
-    getGamesList(userId: String!, limit: Int!, offset: Int!): GetGameListResult!
+    getGamesList(userId: String!, handshakes: Boolean!, limit: Int!, offset: Int!): GetGameListResult!
     getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetGameListResult!
     getGame(gameId: String!): Game!
     getProfile(id: String!): Profile!
@@ -41,6 +41,7 @@ export const typeDefs = `#graphql
       score: String!
     ): Game!
     resetPassword(email: String!): String!
+    confirmGame(userId: String!, gameId: String!): Game!
   }
 
 
@@ -113,6 +114,8 @@ export const typeDefs = `#graphql
     attackerArmy: String!
     defenderArmy: String!
     score: String!
+    attackerHandshake: Boolean!
+    defenderHandshake: Boolean!
   }
 
   type ProfileTotalGames {

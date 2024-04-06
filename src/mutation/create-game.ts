@@ -79,13 +79,20 @@ export const createGame = async ({
   game.attackerAveragePoints = attackerAveragePoints;
   game.defenderAveragePoints = defenderAveragePoints;
   game.league = league || null;
+  game.attackerHandshake = Boolean(attackerId && defenderId) ? false : true;
+  game.defenderHandshake = Boolean(attackerId && defenderId) ? false : true;
 
   console.log('createGame - info - Saving new game item to database...');
 
   await AppDataSource.manager.insert(Game, game);
 
-  // Handle win streak updates
+  // Return now if playing against player.
+  // The below will be handled in the handshake stage
+  if (Boolean(attackerId && defenderId)) {
+    return game;
+  }
 
+  // Handle win streak updates
   if (attackerPoints > defenderPoints) {
     if (attackerId) {
       const newWinStreak = attacker.winStreak + 1;
@@ -132,12 +139,15 @@ export const createGame = async ({
       const updateValues = {
         winStreak: newWinStreak,
         maxWinStreak: defender.maxWinStreak < newWinStreak ? newWinStreak : defender.maxWinStreak,
-        globalRanking: calculateNewRank({
-          currentRank: defender.globalRanking,
-          opponentRank: attacker.globalRanking,
-          isBonusPoints: defenderPoints > attackerPoints + 19,
-          win: true,
-        }),
+        globalRanking:
+          attackerId && defenderId
+            ? calculateNewRank({
+                currentRank: defender.globalRanking,
+                opponentRank: attacker.globalRanking,
+                isBonusPoints: defenderPoints > attackerPoints + 19,
+                win: true,
+              })
+            : defender.globalRanking,
       };
 
       await AppDataSource.manager.update(User, { id: defenderId }, updateValues);
@@ -149,12 +159,15 @@ export const createGame = async ({
         { id: attackerId },
         {
           winStreak: 0,
-          globalRanking: calculateNewRank({
-            currentRank: attacker.globalRanking,
-            opponentRank: defender.globalRanking,
-            isBonusPoints: false,
-            win: false,
-          }),
+          globalRanking:
+            attackerId && defenderId
+              ? calculateNewRank({
+                  currentRank: attacker.globalRanking,
+                  opponentRank: defender.globalRanking,
+                  isBonusPoints: false,
+                  win: false,
+                })
+              : attacker.globalRanking,
         },
       );
     }

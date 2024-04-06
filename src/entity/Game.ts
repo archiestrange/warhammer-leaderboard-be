@@ -40,4 +40,10 @@ export class Game {
 
   @Column()
   score: string;
+
+  @Column({ default: true })
+  attackerHandshake: boolean;
+
+  @Column({ default: true })
+  defenderHandshake: boolean;
 }
