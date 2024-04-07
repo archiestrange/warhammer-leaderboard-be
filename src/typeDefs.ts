@@ -4,7 +4,7 @@ export const typeDefs = `#graphql
     getFriendList(userId: String!, limit: Int!, offset: Int!): GetFriendListResult!
     getSuggestedFriends(userId: String!, limit: Int!, offset: Int!): GetSuggestedFriendsResult!
     getFriendRequestList(userId: String!, limit: Int!, offset: Int!): GetFriendRequestListResult
-    searchUsers(email: String!, firstname: String!, lastname: String!): [User!]!
+    searchUsers(email: String!, firstname: String!, lastname: String!, username: String!): [User!]!
     getLeagueList(userId: String!, limit: Int!, offset: Int!): GetLeagueListResult!
     searchLeagues(userId: String!, name: String!): [League!]!
     getLeague(userId: String!, leagueId: String!): LeagueMember!
