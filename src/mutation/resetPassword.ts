@@ -19,6 +19,9 @@ export const resetPassword = async ({ email }) => {
   const newPassword = makePassword(8);
 
   var transporter = createTransport({
+    host: 'smtp.hosts.co.uk',
+    port: 465,
+    secure: true, // true for 465, false for other ports
     auth: {
       user: 'tallyman.uk',
       pass: process.env.EMAIL_PASSWORD,
@@ -26,7 +29,7 @@ export const resetPassword = async ({ email }) => {
   });
 
   var mailOptions = {
-    from: 'noreply.tallyman@gmail.com',
+    from: 'no-reply@tallyman.uk',
     to: email,
     subject: 'Your password has been updated',
     text: `Use this to sign in next time: ${newPassword}`,
@@ -35,7 +38,7 @@ export const resetPassword = async ({ email }) => {
   try {
     await transporter.sendMail(mailOptions);
   } catch (err) {
-    throw new Error(err);
+    throw new Error('Email could not be sent');
   }
 
   const existingEmail = await AppDataSource.manager.findOne(User, {
