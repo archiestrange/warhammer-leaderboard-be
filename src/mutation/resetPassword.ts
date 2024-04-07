@@ -1,7 +1,7 @@
+import { createTransport } from 'nodemailer';
+
 import { AppDataSource } from '../data-source';
 import { User } from '../entity/User';
-
-var nodemailer = require('nodemailer');
 
 function makePassword(length) {
   let result = '';
@@ -18,8 +18,7 @@ function makePassword(length) {
 export const resetPassword = async ({ email }) => {
   const newPassword = makePassword(8);
 
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
+  var transporter = createTransport({
     auth: {
       user: 'tallyman.uk',
       pass: process.env.EMAIL_PASSWORD,
@@ -27,7 +26,7 @@ export const resetPassword = async ({ email }) => {
   });
 
   var mailOptions = {
-    from: 'no-reply@gmailtallyman.uk',
+    from: 'noreply.tallyman@gmail.com',
     to: email,
     subject: 'Your password has been updated',
     text: `Use this to sign in next time: ${newPassword}`,
@@ -36,7 +35,7 @@ export const resetPassword = async ({ email }) => {
   try {
     await transporter.sendMail(mailOptions);
   } catch (err) {
-    throw new Error('Email could not be sent');
+    throw new Error(err);
   }
 
   const existingEmail = await AppDataSource.manager.findOne(User, {
