@@ -49,6 +49,13 @@ export const typeDefs = `#graphql
       attackerArmy: String!,
       defenderArmy: String!,
       score: String!
+      attackerArmyDetail: String!
+      defenderArmyDetail: String!
+      round1Notes: String!
+      round2Notes: String!
+      round3Notes: String!
+      round4Notes: String!
+      round5Notes: String!
     ): Game!
     resetPassword(email: String!): String!
     confirmGame(userId: String!, gameId: String!): Game!
@@ -127,6 +134,13 @@ export const typeDefs = `#graphql
     score: String!
     attackerHandshake: Boolean!
     defenderHandshake: Boolean!
+    attackerArmyDetail: String!
+    defenderArmyDetail: String!
+    round1Notes: String!
+    round2Notes: String!
+    round3Notes: String!
+    round4Notes: String!
+    round5Notes: String!
   }
 
   type ProfileTotalGames {

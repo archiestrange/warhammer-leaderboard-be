@@ -46,4 +46,25 @@ export class Game {
 
   @Column({ default: true })
   defenderHandshake: boolean;
+
+  @Column({ default: '' })
+  attackerArmyDetail: string;
+
+  @Column({ default: '' })
+  defenderArmyDetail: string;
+
+  @Column({ default: '' })
+  round1Notes: string;
+
+  @Column({ default: '' })
+  round2Notes: string;
+
+  @Column({ default: '' })
+  round3Notes: string;
+
+  @Column({ default: '' })
+  round4Notes: string;
+
+  @Column({ default: '' })
+  round5Notes: string;
 }

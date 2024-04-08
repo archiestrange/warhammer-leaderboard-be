@@ -17,6 +17,13 @@ export const createGame = async ({
   attackerArmy,
   defenderArmy,
   score,
+  attackerArmyDetail,
+  defenderArmyDetail,
+  round1Notes,
+  round2Notes,
+  round3Notes,
+  round4Notes,
+  round5Notes,
 }) => {
   console.log('createGame - info - started');
   console.log('createGame - info - Validating user exists...');
@@ -81,6 +88,13 @@ export const createGame = async ({
   game.league = league || null;
   game.attackerHandshake = Boolean(attackerId && defenderId) ? false : true;
   game.defenderHandshake = Boolean(attackerId && defenderId) ? false : true;
+  game.attackerArmyDetail = attackerArmyDetail;
+  game.defenderArmyDetail = defenderArmyDetail;
+  game.round1Notes = round1Notes;
+  game.round2Notes = round2Notes;
+  game.round3Notes = round3Notes;
+  game.round4Notes = round4Notes;
+  game.round5Notes = round5Notes;
 
   console.log('createGame - info - Saving new game item to database...');
 
