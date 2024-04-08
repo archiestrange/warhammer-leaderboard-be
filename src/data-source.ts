@@ -1,6 +1,8 @@
 import { DataSource } from 'typeorm';
 
 import { Blocked } from './entity/Blocked';
+import { Community } from './entity/Community';
+import { CommunityMember } from './entity/CommunityMember';
 import { Friend } from './entity/Friend';
 import { FriendRequest } from './entity/FriendRequest';
 import { Game } from './entity/Game';
@@ -27,8 +29,9 @@ export const AppDataSource = new DataSource({
     FriendRequest,
     League,
     LeagueMember,
+    Community,
+    CommunityMember,
     Game,
-    // Add more here...
   ],
   migrations: [],
   subscribers: [],

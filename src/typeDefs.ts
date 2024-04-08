@@ -6,12 +6,17 @@ export const typeDefs = `#graphql
     getFriendRequestList(userId: String!, limit: Int!, offset: Int!): GetFriendRequestListResult
     searchUsers(email: String!, firstname: String!, lastname: String!, username: String!): [User!]!
     getLeagueList(userId: String!, limit: Int!, offset: Int!): GetLeagueListResult!
+    getCommunityList(userId: String!, limit: Int!, offset: Int!): GetCommunityListResult!
     searchLeagues(userId: String!, name: String!): [League!]!
+    searchCommunities(userId: String!, name: String!): [Community!]!
     getLeague(userId: String!, leagueId: String!): LeagueMember!
+    getCommunity(userId: String!, communityId: String!): CommunityMember!
     getLeagueMembers(leagueId: String!, limit: Int!, offset: Int!): GetLeagueListResult!
+    getCommunityMembers(communityId: String!, limit: Int!, offset: Int!): GetCommunityListResult!
     getGamesList(userId: String!, handshakes: Boolean!, limit: Int!, offset: Int!): GetGameListResult!
     getFriendsGamesList(userId: String!, limit: Int!, offset: Int!): GetFriendsGameListResult!
     getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetLeagueGameListResult!
+    getGamesByCommunityList(communityId: String!, limit: Int!, offset: Int!): GetCommunityGameListResult!
     getGame(gameId: String!): Game!
     getProfile(id: String!): Profile!
     getUserRankings(limit: Int!, offset: Int!): GetUserRankingsResult!
@@ -28,8 +33,11 @@ export const typeDefs = `#graphql
     removeFriend(id: String!): String!
     blockUser(blockerId: String!, blockeeId: String!): Blocked!
     createLeague(userId: String!, name: String!, isPrivate: Boolean!): League!
+    createCommunity(userId: String!, name: String!, isPrivate: Boolean!): Community!
     deleteLeague(userId: String!, leagueId: String!): League!
+    deleteCommunity(userId: String!, communityId: String!): Community!
     joinLeague(userId: String!, leagueId: String!): LeagueMember!
+    joinCommunity(userId: String!, communityId: String!): CommunityMember!
     createGame(
       attackerId: String,
       defenderId: String,
@@ -183,8 +191,33 @@ export const typeDefs = `#graphql
     leagueRanking: Int!
   }
 
+  type Community {
+    id: String!
+    date: String!
+    name: String!
+    owner: User!
+    private: Boolean!
+  }
+
+  type CommunityMember {
+    id: String!
+    date: String!
+    user: User!
+    community: Community!
+  }
+
+  type GetCommunityListResult {
+    data: [CommunityMember!]!
+    count: Int!
+  }
+
   type GetLeagueListResult {
     data: [LeagueMember!]!
+    count: Int!
+  }
+
+  type GetCommunityListResult {
+    data: [CommunityMember!]!
     count: Int!
   }
 
@@ -199,6 +232,11 @@ export const typeDefs = `#graphql
   }
 
   type GetLeagueGameListResult {
+    data: [Game!]!
+    count: Int!
+  }
+
+  type GetCommunityGameListResult {
     data: [Game!]!
     count: Int!
   }
