@@ -204,6 +204,7 @@ export const typeDefs = `#graphql
     date: String!
     user: User!
     community: Community!
+    isMember: Boolean
   }
 
   type GetCommunityListResult {
