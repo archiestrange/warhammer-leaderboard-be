@@ -10,7 +10,8 @@ export const typeDefs = `#graphql
     getLeague(userId: String!, leagueId: String!): LeagueMember!
     getLeagueMembers(leagueId: String!, limit: Int!, offset: Int!): GetLeagueListResult!
     getGamesList(userId: String!, handshakes: Boolean!, limit: Int!, offset: Int!): GetGameListResult!
-    getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetGameListResult!
+    getFriendsGamesList(userId: String!, limit: Int!, offset: Int!): GetFriendsGameListResult!
+    getGamesByLeagueList(leagueId: String!, limit: Int!, offset: Int!): GetLeagueGameListResult!
     getGame(gameId: String!): Game!
     getProfile(id: String!): Profile!
     getUserRankings(limit: Int!, offset: Int!): GetUserRankingsResult!
@@ -188,6 +189,16 @@ export const typeDefs = `#graphql
   }
 
   type GetGameListResult {
+    data: [Game!]!
+    count: Int!
+  }
+
+  type GetFriendsGameListResult {
+    data: [Game!]!
+    count: Int!
+  }
+
+  type GetLeagueGameListResult {
     data: [Game!]!
     count: Int!
   }

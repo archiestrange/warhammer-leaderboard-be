@@ -14,6 +14,7 @@ import { signIn } from './mutation/sign-in';
 import { updateUser } from './mutation/update-user';
 import { getFriendList } from './query/get-friend-list';
 import { getFriendRequestList } from './query/get-friend-request-list';
+import { getFriendsGamesList } from './query/get-friends-games-list';
 import { getGame } from './query/get-game';
 import { getGamesByLeagueList } from './query/get-games-by-league-list';
 import { getGamesList } from './query/get-games-list';
@@ -39,6 +40,7 @@ export const resolvers = {
     getLeague: (_, args) => getLeague(args),
     getLeagueMembers: (_, args) => getLeagueMembers(args),
     getGamesList: (_, args) => getGamesList(args),
+    getFriendsGamesList: (_, args) => getFriendsGamesList(args),
     getGamesByLeagueList: (_, args) => getGamesByLeagueList(args),
     getGame: (_, args) => getGame(args),
     getProfile: (_, args) => getProfile(args),
