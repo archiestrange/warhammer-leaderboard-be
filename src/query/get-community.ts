@@ -10,7 +10,7 @@ export const getCommunity = async ({ userId, communityId }) => {
   });
 
   const isMember = await AppDataSource.manager.findOne(CommunityMember, {
-    where: { user: { id: userId } },
+    where: { community: { id: communityId }, user: { id: userId } },
     relations: ['user', 'community', 'community.owner'],
   });
 
