@@ -16,7 +16,7 @@ export const getProfile = async ({ id }: Args) => {
   const query = `
     SELECT subquery.rowNumber
     FROM (
-      SELECT id, ROW_NUMBER() OVER (ORDER BY "globalRanking" DESC) AS rownumber
+      SELECT id, ROW_NUMBER() OVER (ORDER BY "globalRanking" DESC, "date" ASC) AS rownumber
       FROM "user"
     ) AS subquery
     WHERE subquery.id = $1

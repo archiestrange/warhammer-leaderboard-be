@@ -11,6 +11,7 @@ export const getLeagueMembers = async ({ leagueId, limit, offset }) => {
     skip: offset,
     order: {
       leagueRanking: 'DESC',
+      date: 'ASC',
     },
   });
 

@@ -9,6 +9,7 @@ export const getUserRankings = async ({ limit, offset }) => {
     skip: offset,
     order: {
       globalRanking: 'DESC',
+      date: 'ASC',
     },
   });
 
