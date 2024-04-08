@@ -11,6 +11,7 @@ import { removeFriend } from './mutation/remove-friend';
 import { resetPassword } from './mutation/resetPassword';
 import { sendFriendRequest } from './mutation/send-friend-request';
 import { signIn } from './mutation/sign-in';
+import { updateUser } from './mutation/update-user';
 import { getFriendList } from './query/get-friend-list';
 import { getFriendRequestList } from './query/get-friend-request-list';
 import { getGame } from './query/get-game';
@@ -45,6 +46,7 @@ export const resolvers = {
   },
   Mutation: {
     createUser: (_, args) => createUser(args),
+    updateUser: (_, args) => updateUser(args),
     signIn: (_, args) => signIn(args),
     sendFriendRequest: async (_, args) => sendFriendRequest(args),
     acceptFriendRequest: async (_, args) => acceptFriendRequest(args),

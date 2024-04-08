@@ -19,6 +19,7 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createUser(firstName: String!, lastName: String!, email: String!, username: String!, password: String!): User!
+    updateUser(id: String!, newFirstName: String, newLastName: String, currentPassword: String, newPassword: String, newFavouriteArmy: String): User!
     signIn(email: String!, password: String!): User!
     sendFriendRequest(senderUserId: String!, receiverUserId: String!): String!
     acceptFriendRequest(id: String!): Friend!
@@ -57,6 +58,7 @@ export const typeDefs = `#graphql
     maxWinStreak: Int!
     globalRanking: Int!
     date: String!
+    favouriteArmy: String!
   }
 
 

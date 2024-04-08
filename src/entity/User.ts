@@ -31,4 +31,7 @@ export class User {
 
   @Column({ default: 400 })
   globalRanking: number;
+
+  @Column({ default: 'Death Guard' })
+  favouriteArmy: string;
 }
