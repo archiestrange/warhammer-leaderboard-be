@@ -3,7 +3,14 @@ import { User } from '../entity/User';
 
 type Args = Omit<User, 'id'>;
 
-export const createUser = async ({ email, username, password, firstName, lastName }: Args) => {
+export const createUser = async ({
+  email,
+  username,
+  password,
+  firstName,
+  lastName,
+  favouriteArmy,
+}: Args) => {
   console.log('createUser - info - started');
   console.log('createUser - info - Validating email does not already exist...');
 
@@ -35,6 +42,7 @@ export const createUser = async ({ email, username, password, firstName, lastNam
   user.password = password;
   user.maxWinStreak = 0;
   user.winStreak = 0;
+  user.favouriteArmy = favouriteArmy;
 
   console.log('createUser - info - Saving new user item to database...');
   await AppDataSource.manager.insert(User, user);

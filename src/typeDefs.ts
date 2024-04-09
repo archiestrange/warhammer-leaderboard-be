@@ -25,7 +25,14 @@ export const typeDefs = `#graphql
 
 
   type Mutation {
-    createUser(firstName: String!, lastName: String!, email: String!, username: String!, password: String!): User!
+    createUser(
+      firstName: String!, 
+      lastName: String!, 
+      email: String!, 
+      username: String!, 
+      password: String!,
+      favouriteArmy: String!
+    ): User!
     updateUser(id: String!, newFirstName: String, newLastName: String, currentPassword: String, newPassword: String, newFavouriteArmy: String): User!
     signIn(email: String!, password: String!): User!
     sendFriendRequest(senderUserId: String!, receiverUserId: String!): String!
