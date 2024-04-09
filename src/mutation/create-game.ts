@@ -24,6 +24,10 @@ export const createGame = async ({
   round3Notes,
   round4Notes,
   round5Notes,
+  attackerTacticalPoints,
+  defenderTacticalPoints,
+  attackerFixedPoints,
+  defenderFixedPoints,
 }) => {
   console.log('createGame - info - started');
   console.log('createGame - info - Validating user exists...');
@@ -95,6 +99,10 @@ export const createGame = async ({
   game.round3Notes = round3Notes;
   game.round4Notes = round4Notes;
   game.round5Notes = round5Notes;
+  game.attackerTacticalPoints = attackerTacticalPoints;
+  game.defenderTacticalPoints = defenderTacticalPoints;
+  game.attackerFixedPoints = attackerFixedPoints;
+  game.defenderFixedPoints = defenderFixedPoints;
 
   console.log('createGame - info - Saving new game item to database...');
 

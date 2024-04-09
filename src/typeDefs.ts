@@ -56,6 +56,10 @@ export const typeDefs = `#graphql
       round3Notes: String!
       round4Notes: String!
       round5Notes: String!
+      attackerTacticalPoints: Int
+      defenderTacticalPoints: Int
+      attackerFixedPoints: Int
+      defenderFixedPoints: Int
     ): Game!
     resetPassword(email: String!): String!
     confirmGame(userId: String!, gameId: String!): Game!
@@ -148,6 +152,8 @@ export const typeDefs = `#graphql
     totalWins: Int!
     totalLosses: Int!
     totalDraws: Int!
+    totalGamesAsFixed: Int!
+    totalGamesAsTactical: Int!
   }
 
   type ProfileTotalAttackerGames{
@@ -171,6 +177,11 @@ export const typeDefs = `#graphql
   }
 
   type ProfileVP {
+    averageVPOnAll: Float!
+    averageSecondaryVPOnTactical: Float!
+    averageSecondaryVPOnFixed: Float!
+    averageVPOnAllAsAttacker: Float!
+    averageVPOnAllAsDefender: Float!
     averageVPOnWins: Float!
     averageVPOnLosses: Float!
     averageVPOnWinsAsAttacker: Float!

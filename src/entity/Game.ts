@@ -67,4 +67,16 @@ export class Game {
 
   @Column({ default: '' })
   round5Notes: string;
+
+  @Column({ nullable: true, default: null })
+  attackerTacticalPoints: number;
+
+  @Column({ nullable: true, default: null })
+  attackerFixedPoints: number;
+
+  @Column({ nullable: true, default: null })
+  defenderTacticalPoints: number;
+
+  @Column({ nullable: true, default: null })
+  defenderFixedPoints: number;
 }
