@@ -140,7 +140,7 @@ export const createGame = async ({
         User,
         { id: defenderId },
         {
-          winStreak: 0,
+          winStreak: defender.winStreak < 1 ? defender.winStreak - 1 : 0,
           globalRanking:
             attackerId && defenderId
               ? calculateNewRank({
@@ -180,7 +180,7 @@ export const createGame = async ({
         User,
         { id: attackerId },
         {
-          winStreak: 0,
+          winStreak: attacker.winStreak < 1 ? attacker.winStreak - 1 : 0,
           globalRanking:
             attackerId && defenderId
               ? calculateNewRank({
