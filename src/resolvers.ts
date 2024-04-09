@@ -18,6 +18,7 @@ import { updateUser } from './mutation/update-user';
 import { getCommunity } from './query/get-community';
 import { getCommunityList } from './query/get-community-list';
 import { getCommunityMembers } from './query/get-community-members';
+import { getComparison } from './query/get-comparison';
 import { getFriendList } from './query/get-friend-list';
 import { getFriendRequestList } from './query/get-friend-request-list';
 import { getFriendsGamesList } from './query/get-friends-games-list';
@@ -57,6 +58,7 @@ export const resolvers = {
     getGamesByCommunityList: (_, args) => getGamesByCommunityList(args),
     getGame: (_, args) => getGame(args),
     getProfile: (_, args) => getProfile(args),
+    getComparison: (_, args) => getComparison(args),
     getUserRankings: (_, args) => getUserRankings(args),
   },
   Mutation: {

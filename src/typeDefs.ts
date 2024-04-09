@@ -19,6 +19,7 @@ export const typeDefs = `#graphql
     getGamesByCommunityList(communityId: String!, limit: Int!, offset: Int!): GetCommunityGameListResult!
     getGame(gameId: String!): Game!
     getProfile(id: String!): Profile!
+    getComparison(user1Id: String!, user1Army: String!, user2Id: String!, user2Army: String!): Comparison!
     getUserRankings(limit: Int!, offset: Int!): GetUserRankingsResult!
   }
 
@@ -200,6 +201,37 @@ export const typeDefs = `#graphql
     vp: ProfileVP!
   }
 
+  type ComparisonGamesUser {
+    totalGames: Int!
+    totalWins: Int!
+    totalLosses: Int!
+    totalDraws: Int!
+  }
+
+  type ComparisonGames {
+    user1: ComparisonGamesUser!
+    user2: ComparisonGamesUser!
+  }
+
+  type ComparisonVPUser  {
+    averageVP: Float!
+    averagePrimary: Float!
+    averagetTactical: Float!
+    averagetFixed: Float!
+  }
+
+  type ComparisonVP {
+    user1: ComparisonVPUser!
+    user2: ComparisonVPUser!
+  }
+
+  type Comparison {
+    user1: User!
+    user2: User!
+    games: ComparisonGames!
+    vp: ComparisonVP!
+  }
+  
   type League {
     id: String!
     date: String!

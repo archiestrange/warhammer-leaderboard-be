@@ -33,7 +33,7 @@ export const getProfile = async ({ id }: Args) => {
 
   const allGamesCount = await AppDataSource.manager.find(Game, {
     where: [
-      { attacker: { id } },
+      { attacker: { id }, attackerHandshake: true, defenderHandshake: true },
       { defender: { id }, attackerHandshake: true, defenderHandshake: true },
     ],
     relations: {
@@ -48,10 +48,16 @@ export const getProfile = async ({ id }: Args) => {
   const totalGames = allGamesCount ?? [];
 
   const totalGamesAsTactical = (allGamesCount ?? []).filter(
-    (f) => f.attackerTacticalPoints != null,
+    (f) =>
+      (f.attacker.id === id && f.attackerTacticalPoints != null) ||
+      (f.defender.id === id && f.defenderTacticalPoints != null),
   );
 
-  const totalGamesAsFixed = (allGamesCount ?? []).filter((f) => f.attackerFixedPoints != null);
+  const totalGamesAsFixed = (allGamesCount ?? []).filter(
+    (f) =>
+      (f.attacker.id === id && f.attackerFixedPoints != null) ||
+      (f.defender.id === id && f.defenderFixedPoints != null),
+  );
 
   const totalWins = (allGamesCount ?? []).filter((f) => {
     if (f.attacker?.id === id) {
