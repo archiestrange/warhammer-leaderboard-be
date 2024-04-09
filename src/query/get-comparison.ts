@@ -157,7 +157,7 @@ export const getComparison = async ({ user1Id, user1Army, user2Id, user2Army }) 
           (currentValue.defenderTacticalPoints ?? 0)),
     0,
   );
-  const user2PrimaryVP = user1TotalGames.reduce(
+  const user2PrimaryVP = user2TotalGames.reduce(
     (accumulator, currentValue) =>
       accumulator +
       (currentValue.attacker?.id === user2Id
