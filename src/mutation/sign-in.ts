@@ -9,8 +9,8 @@ export const signIn = async ({ email, password }: Args) => {
 
   const user = await AppDataSource.manager.findOne(User, {
     where: [
-      { email: email.toLowerCase(), password },
-      { username: email.toLowerCase(), password },
+      { email: email, password },
+      { username: email, password },
     ],
   });
 

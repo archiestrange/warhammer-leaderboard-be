@@ -15,7 +15,7 @@ export const createUser = async ({
   console.log('createUser - info - Validating email does not already exist...');
 
   const existingEmail = await AppDataSource.manager.findOne(User, {
-    where: { email: email.toLowerCase() },
+    where: { email: email },
   });
 
   if (existingEmail) {
@@ -23,7 +23,7 @@ export const createUser = async ({
     throw new Error('A user with that email already exists.');
   }
   const existingUsername = await AppDataSource.manager.findOne(User, {
-    where: { username: username.toLowerCase() },
+    where: { username: username },
   });
 
   if (existingUsername) {
