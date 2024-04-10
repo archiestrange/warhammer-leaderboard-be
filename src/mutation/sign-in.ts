@@ -19,7 +19,7 @@ export const signIn = async ({ email, password }: Args) => {
 
   if (!user) {
     console.log('signIn - warning - User could not be found with that email password combo.');
-    throw new Error('No user with that email or username exists.');
+    throw new Error('No user with that email or username exists');
   }
 
   const authUser = await userRepository
@@ -32,7 +32,7 @@ export const signIn = async ({ email, password }: Args) => {
 
   if (!authUser) {
     console.log('signIn - warning - User could not be found with that email password combo.');
-    throw new Error('Incorrect password.');
+    throw new Error('Incorrect password');
   }
 
   return authUser;
