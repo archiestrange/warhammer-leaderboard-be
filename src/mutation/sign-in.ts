@@ -15,7 +15,8 @@ export const signIn = async ({ email, password }: Args) => {
     .createQueryBuilder('user')
     .where('LOWER(user.email) = LOWER(:email) OR LOWER(user.username) = LOWER(:email)', {
       email: email.toLowerCase(),
-    });
+    })
+    .getOne();
 
   if (!user) {
     console.log('signIn - warning - User could not be found with that email password combo.');
