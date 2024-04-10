@@ -14,17 +14,27 @@ export const createUser = async ({
   console.log('createUser - info - started');
   console.log('createUser - info - Validating email does not already exist...');
 
-  const existingEmail = await AppDataSource.manager.findOne(User, {
-    where: { email: email },
-  });
+  const userRepository = AppDataSource.manager.getRepository(User);
+  const existingEmail = await userRepository
+    .createQueryBuilder('user')
+    .where('LOWER(user.email) = LOWER(:email)', {
+      email: email.toLowerCase(),
+    })
+    .andWhere('user.password = :password', { password })
+    .getOne();
 
   if (existingEmail) {
     console.log('createUser - warning - Email validation failed. User already exists.');
     throw new Error('A user with that email already exists.');
   }
-  const existingUsername = await AppDataSource.manager.findOne(User, {
-    where: { username: username },
-  });
+
+  const existingUsername = await userRepository
+    .createQueryBuilder('user')
+    .where('LOWER(user.username) = LOWER(:username)', {
+      username: username.toLowerCase(),
+    })
+    .andWhere('user.password = :password', { password })
+    .getOne();
 
   if (existingUsername) {
     console.log('createUser - warning - Username validation failed. User already exists.');
@@ -37,8 +47,8 @@ export const createUser = async ({
   const user = new User();
   user.firstName = firstName;
   user.lastName = lastName;
-  user.username = username.toLowerCase();
-  user.email = email.toLowerCase();
+  user.username = username;
+  user.email = email;
   user.password = password;
   user.maxWinStreak = 0;
   user.winStreak = 0;

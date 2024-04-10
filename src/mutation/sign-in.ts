@@ -1,3 +1,5 @@
+import { Raw } from 'typeorm';
+
 import { AppDataSource } from '../data-source';
 import { User } from '../entity/User';
 
@@ -7,12 +9,15 @@ export const signIn = async ({ email, password }: Args) => {
   console.log('signIn - info - started');
   console.log('signIn - info - Validating email does not already exist...');
 
-  const user = await AppDataSource.manager.findOne(User, {
-    where: [
-      { email: email, password },
-      { username: email, password },
-    ],
-  });
+  const userRepository = AppDataSource.manager.getRepository(User);
+
+  const user = await userRepository
+    .createQueryBuilder('user')
+    .where('LOWER(user.email) = LOWER(:email) OR LOWER(user.username) = LOWER(:email)', {
+      email: email.toLowerCase(),
+    })
+    .andWhere('user.password = :password', { password })
+    .getOne();
 
   if (!user) {
     console.log('signIn - warning - User could not be found with that email password combo.');
