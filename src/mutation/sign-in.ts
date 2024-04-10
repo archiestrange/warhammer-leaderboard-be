@@ -15,14 +15,25 @@ export const signIn = async ({ email, password }: Args) => {
     .createQueryBuilder('user')
     .where('LOWER(user.email) = LOWER(:email) OR LOWER(user.username) = LOWER(:email)', {
       email: email.toLowerCase(),
+    });
+
+  if (!user) {
+    console.log('signIn - warning - User could not be found with that email password combo.');
+    throw new Error('No user with that email or username exists.');
+  }
+
+  const authUser = await userRepository
+    .createQueryBuilder('user')
+    .where('LOWER(user.email) = LOWER(:email) OR LOWER(user.username) = LOWER(:email)', {
+      email: email.toLowerCase(),
     })
     .andWhere('user.password = :password', { password })
     .getOne();
 
-  if (!user) {
+  if (!authUser) {
     console.log('signIn - warning - User could not be found with that email password combo.');
-    throw new Error('User not found.');
+    throw new Error('Incorrect password.');
   }
 
-  return user;
+  return authUser;
 };
